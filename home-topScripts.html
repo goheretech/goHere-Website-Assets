@@ -1,0 +1,201 @@
+<!-- Figure out which browser and computer the user is using -->
+<script src="
+https://cdn.jsdelivr.net/npm/bowser@2.11.0/es5.min.js
+"></script>
+<script>
+  const browser = bowser.getParser(navigator.userAgent);
+
+  console.log(bowser.parse(window.navigator.userAgent));
+  // Check if the user is using Safari on a desktop
+  if (browser.getOSName() === "macOS") {
+    let test = browser.getBrowserVersion();
+    let bro = browser.getBrowserName();
+
+    let firstTwo = test.substring(0, 2);
+    let v = parseInt(firstTwo);
+    if (v <= 13 && bro == "Safari") {
+      window.location.href = "/home-simple";
+    }
+  }
+</script>
+
+<!-- Set styles on home page -->
+<style>
+  #load {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center; /* Center elements horizontally */
+    align-items: center; /* Center elements vertically */
+    background: rgb(0, 0, 0);
+  }
+
+  .loadlogo {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center; /* Center elements horizontally */
+    align-items: center; /* Center elements vertically */
+    animation: spin 5s linear infinite;
+  }
+  .pod-holder {
+    position: absolute;
+  }
+  .pod {
+    width: 50px;
+    animation: scale 2.5s linear infinite alternate;
+    transform: translatey(100px) rotate(35deg) scale(1);
+    opacity: 0.2;
+  }
+  .page-wrapper {
+    opacity: 0;
+  }
+  .no-load {
+    animation: hide 1s linear 1;
+    animation-fill-mode: forwards;
+  }
+  .show {
+    animation: show 1s linear 1;
+    animation-fill-mode: forwards;
+    animation-delay: 0s;
+  }
+  @media only screen and (max-width: 867px) {
+    #load {
+      transform: scale(0.4);
+    }
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes scale {
+    from {
+      transform: translatey(100px) rotate(35deg) scale(1);
+      opacity: 0.2;
+    }
+    to {
+      transform: translatey(100px) rotate(35deg) scale(1.3);
+      opacity: 1;
+    }
+  }
+
+  @keyframes show {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
+  }
+  @keyframes hide {
+    99% {
+      display: flex;
+    }
+    100% {
+      display: hidden;
+    }
+  }
+
+  #dropLogo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+  .droppingLogo {
+    pointer-events: none;
+  }
+
+  #highway {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+<div id="load" data-fs-scrolldisable-element="when-visible">
+  <div class="loadlogo">
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Forange.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Fyellow.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Fgreen.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Fblue.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Fcyan.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Fpurple.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+    <div class="pod-holder">
+      <image
+        src="https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fpods%2Fred.webp?alt=media"
+        class="pod"
+      ></image>
+    </div>
+  </div>
+</div>
+<script>
+  document.body.style.overflow = "hidden";
+
+  //Setup Load Screen
+  var pods = document.getElementsByClassName("pod-holder");
+  for (let i = 0; i < pods.length; i++) {
+    const pod = pods[i];
+    let rot = (360 / 7) * i;
+    pod.style.transform = "rotate(" + rot + "deg)";
+    pod.children[0].style.animationDelay = i / 2 + "s";
+  }
+
+  window.onscroll = function (e) {
+    e.preventDefault();
+  };
+
+  window.onload = function () {
+    document.getElementById("load").classList.add("no-load");
+    document.getElementById("page-wrapper").classList.add("show");
+
+    window.onscroll = function (e) {};
+    document.body.style.overflow = "visible";
+  };
+</script>

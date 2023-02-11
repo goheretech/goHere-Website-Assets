@@ -1,0 +1,375 @@
+{
+  "frames": {
+    "chi15.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi16.jpg": {
+      "frame": {
+        "x": 1919,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi17.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 1508,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi18.jpg": {
+      "frame": {
+        "x": 1919,
+        "y": 1508,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi19.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 3016,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi20.jpg": {
+      "frame": {
+        "x": 1919,
+        "y": 3016,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi21.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 4524,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi22.jpg": {
+      "frame": {
+        "x": 1919,
+        "y": 4524,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi23.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 6032,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi24.jpg": {
+      "frame": {
+        "x": 1919,
+        "y": 6032,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi25.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 7540,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi26.jpg": {
+      "frame": {
+        "x": 1919,
+        "y": 7540,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi27.jpg": {
+      "frame": {
+        "x": 0,
+        "y": 9048,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": true,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi28.jpg": {
+      "frame": {
+        "x": 1508,
+        "y": 9048,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "chi29.jpg": {
+      "frame": {
+        "x": 1508,
+        "y": 10556,
+        "w": 1919,
+        "h": 1508
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 1919,
+        "h": 1508
+      },
+      "sourceSize": {
+        "w": 1919,
+        "h": 1508
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.7",
+    "image": "texture-1.jpg",
+    "format": "RGB888",
+    "size": {
+      "w": 3838,
+      "h": 12064
+    },
+    "scale": 1
+  }
+}

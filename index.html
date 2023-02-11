@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>goHere v3</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"
+      integrity="sha512-9ex1Kp3S7uKHVZmQ44o5qPV6PnP8/kYp8IpUHLDJ+GZ/qpKAqGgEEH7rhYlM4pTOSs/WyHtPubN2UePKTnTSww=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/textillate/0.4.0/jquery.textillate.min.js"
+      integrity="sha512-0bHMhYsdpiur1bT84kDH4D7cpxFQ9O7uA5yxVAqWC87h552Xt0swX4M+ZlXMKE8oPVRIJ5lAwXWO2UWeDwJJOw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      .slide {
+        height: 400vh;
+      }
+      #dropLogo {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      #startButton {
+        padding: 10px 15px;
+        border: 1px solid rgb(0, 0, 0);
+        position: absolute;
+        bottom: 40px;
+        right: 40px;
+        color: rgb(0, 0, 0);
+        cursor: pointer;
+      }
+
+      .loadScreen {
+        background: black;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .loadBar {
+        border: 1px solid white;
+        width: 600px;
+        height: 20px;
+        position: relative;
+      }
+      #loadBar_internal {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 0%;
+        background: white;
+      }
+
+      .s {
+        height: 100vh;
+      }
+
+      canvas {
+        z-index: 99;
+        top: 0;
+        /* z-index:999999999; */
+        position: relative;
+      }
+
+      #gui {
+        position: fixed;
+        top: 10px;
+        left: 4px;
+        z-index: 9999999;
+      }
+
+      body {
+        background: rgb(255, 255, 255);
+        background-attachment: fixed;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .rail {
+        height: 700vh;
+        position: relative;
+      }
+      .cart {
+        height: 100vh;
+        width: 100%;
+        position: sticky;
+        top: 0px;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      section {
+        height: 100vh;
+        display: flex;
+        display: flex; /* Enable flexbox layout */
+        justify-content: center; /* Center elements horizontally */
+        align-items: center; /* Center elements vertically */
+      }
+      .card {
+        border-radius: 30px;
+        background: white;
+        display: flex; /* Enable flexbox layout */
+        justify-content: center; /* Center elements horizontally */
+        align-items: center; /* Center elements vertically */
+        text-align: center;
+        padding-top: 80px;
+        padding-bottom: 80px;
+        padding-left: 120px;
+        padding-right: 120px;
+        flex-direction: column;
+        max-width: 900px;
+      }
+      h1 {
+        font-size: 36px;
+        padding-bottom: 10px;
+        color: black;
+      }
+      h1 {
+        font-size: 18px;
+        padding-bottom: 10px;
+        color: black;
+      }
+      p {
+        font-size: 22px;
+        line-height: 24px;
+        color: black;
+      }
+
+      #lower {
+        width: 100vw;
+        height: 100%;
+        /* background:rgba(255, 0, 0, 0.3); */
+        z-index: -1;
+      }
+      #upper {
+        width: 100vw;
+        height: 100%;
+        /* background:rgba(0, 255, 0, 0.3); */
+        z-index: 3;
+      }
+      #middle {
+        /* background:rgba(127, 44, 204, 0.8); */
+        height: 500vh;
+        position: relative;
+        z-index: 2;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.js",
+          "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/OBJLoader.js",
+          "RGBELoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/RGBELoader.js",
+          "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/OrbitControls.js",
+          "GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/GLTFLoader.js",
+          "EXRLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/EXRLoader.js",
+          "RenderPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/RenderPass.js",
+          "UnrealBloomPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/UnrealBloomPass.js",
+          "BokehPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/BokehPass.js",
+          "EffectComposer": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/EffectComposer.js",
+          "dat.gui": "https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="dropLogo"></canvas>
+    <!-- <div class="loadScreen"><div class="loadBar"><div id="loadbar_internal"></div></div></div> -->
+    <div class="holder">
+      <div id="middle">
+        <section>
+          <div class="card">
+            <h3>Lorem ipsum</h3>
+            <h1>Lorem ipsum</h1>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
+              error veritatis vitae blanditiis quod beatae soluta fugit tempore
+              harum quo inventore eaque nobis dolorem, molestias distinctio
+              temporibus, laudantium culpa sequi. Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Laborum error veritatis vitae
+              blanditiis quod beatae soluta fugit tempore harum quo inventore
+              eaque nobis dolorem, molestias distinctio temporibus, laudantium
+              culpa sequi.
+            </p>
+          </div>
+        </section>
+        <div id="slide1" class="slide"></div>
+        <section>
+          <div class="card">
+            <h3>Lorem ipsum</h3>
+            <h1>Lorem ipsum</h1>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
+              error veritatis vitae blanditiis quod beatae soluta fugit tempore
+              harum quo inventore eaque nobis dolorem, molestias distinctio
+              temporibus, laudantium culpa sequi. Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Laborum error veritatis vitae
+              blanditiis quod beatae soluta fugit tempore harum quo inventore
+              eaque nobis dolorem, molestias distinctio temporibus, laudantium
+              culpa sequi.
+            </p>
+          </div>
+        </section>
+        <div id="slide2" class="slide"></div>
+        <div id="slideTower" style="background: red"></div>
+        <section>
+          <div class="card">
+            <h3>Lorem ipsum</h3>
+            <h1>Lorem ipsum</h1>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
+              error veritatis vitae blanditiis quod beatae soluta fugit tempore
+              harum quo inventore eaque nobis dolorem, molestias distinctio
+              temporibus, laudantium culpa sequi. Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Laborum error veritatis vitae
+              blanditiis quod beatae soluta fugit tempore harum quo inventore
+              eaque nobis dolorem, molestias distinctio temporibus, laudantium
+              culpa sequi.
+            </p>
+          </div>
+        </section>
+        <div id="slide3" class="slide"></div>
+        <div id="slide5" class="slide"></div>
+        <section>
+          <div class="card">
+            <h3>Lorem ipsum</h3>
+            <h1>Lorem ipsum</h1>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
+              error veritatis vitae blanditiis quod beatae soluta fugit tempore
+              harum quo inventore eaque nobis dolorem, molestias distinctio
+              temporibus, laudantium culpa sequi. Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Laborum error veritatis vitae
+              blanditiis quod beatae soluta fugit tempore harum quo inventore
+              eaque nobis dolorem, molestias distinctio temporibus, laudantium
+              culpa sequi.
+            </p>
+          </div>
+        </section>
+        <section>
+          <div class="card">
+            <h3>Lorem ipsum</h3>
+            <h1>Lorem ipsum</h1>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laborum
+              error veritatis vitae blanditiis quod beatae soluta fugit tempore
+              harum quo inventore eaque nobis dolorem, molestias distinctio
+              temporibus, laudantium culpa sequi. Lorem ipsum, dolor sit amet
+              consectetur adipisicing elit. Laborum error veritatis vitae
+              blanditiis quod beatae soluta fugit tempore harum quo inventore
+              eaque nobis dolorem, molestias distinctio temporibus, laudantium
+              culpa sequi.
+            </p>
+          </div>
+        </section>
+        <div id="slide4" class="slide"></div>
+      </div>
+    </div>
+  </body>
+
+  <script type="module" src="/js/logo.js"></script>
+</html>

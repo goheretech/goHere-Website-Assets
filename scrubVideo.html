@@ -1,0 +1,110 @@
+<html>
+  <head>
+    <style>
+      .rail {
+        position: relative;
+        height: 400vh;
+        width: 100%;
+      }
+      .cart {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+      }
+
+      #main-canvas {
+        width: 100vw;
+        height: 100vh;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="rail">
+      <div class="cart">
+        <canvas id="main-canvas"></canvas>
+      </div>
+    </div>
+  </body>
+  <script>
+    const frameCount = 60;
+
+    const imageUrls = generateImageUrls("img/chicago/chi", frameCount);
+    function generateImageUrls(basePath, numImages) {
+      const imageUrls = [];
+      for (let i = 0; i < numImages; i++) {
+        const index = i.toString().padStart(2, "0");
+        imageUrls.push(`${basePath}${index}.jpg`);
+      }
+      return imageUrls;
+    }
+
+    // Preload the images
+    const images = [];
+    for (let i = 0; i < frameCount; i++) {
+      const img = new Image();
+      img.src = imageUrls[i];
+      images.push(img);
+    }
+
+    loadImages();
+
+    function loadImages() {
+      for (let i = 0; i < frameCount; i++) {
+        images[i] = new Image();
+        images[i].src = imageUrls[i];
+      }
+    }
+
+    // Create the offscreen canvas
+    const offscreenCanvas = document.createElement("canvas");
+    offscreenCanvas.width = window.innerWidth;
+    offscreenCanvas.height = window.innerHeight;
+    const offscreenCtx = offscreenCanvas.getContext("2d");
+
+    // Get references to the main canvas and its context
+    const mainCanvas = document.getElementById("main-canvas");
+    mainCanvas.width = window.innerWidth;
+    mainCanvas.height = window.innerHeight;
+    const mainCtx = mainCanvas.getContext("2d");
+
+    // Get the height of the rail element
+    const railHeight = document.querySelector(".rail").offsetHeight;
+
+    // Draw the current frame on the offscreen canvas
+    function drawFrame(frameIndex) {
+      offscreenCtx.clearRect(
+        0,
+        0,
+        offscreenCanvas.width,
+        offscreenCanvas.height
+      );
+
+      offscreenCtx.drawImage(
+        images[frameIndex],
+        0,
+        0,
+        offscreenCanvas.width,
+        offscreenCanvas.height
+      );
+    }
+
+    // Copy the current frame from the offscreen canvas to the main canvas
+    function renderFrame() {
+      mainCtx.clearRect(0, 0, mainCanvas.width, mainCanvas.height);
+      mainCtx.drawImage(offscreenCanvas, 0, 0);
+    }
+
+    // Determine the current frame based on the scroll position
+    function updateFrame() {
+      const scrollPos = window.scrollY;
+      const frameIndex = Math.floor((scrollPos / railHeight) * images.length);
+      drawFrame(frameIndex);
+      renderFrame();
+    }
+
+    // Update the frame on scroll
+    window.addEventListener("scroll", updateFrame);
+  </script>
+</html>

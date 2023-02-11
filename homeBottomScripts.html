@@ -1,0 +1,59 @@
+<!-- Allow import maps -->
+<script
+  async
+  src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"
+></script>
+
+<!-- Setup jquery -->
+<script
+  src="https://code.jquery.com/jquery-3.6.1.min.js"
+  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+  crossorigin="anonymous"
+></script>
+
+<!-- Fix Lottie Sizes -->
+<script>
+  var Webflow = Webflow || [];
+  Webflow.push(function () {
+    window.addEventListener("resize", function () {
+      window.Webflow.require("lottie").lottie.resize();
+    });
+  });
+</script>
+
+<!-- Import three.js logo -->
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/gh/goheretech/goHere-v3@96148878cf02fac767c25b6ac56bbd98d3019932/src/logo.js"
+></script>
+
+<!-- Show current slide and hide others -->
+<script>
+  var slides = document.getElementsByClassName("slide_section");
+  var timings = document.getElementsByClassName("timing-box");
+  slides = Array.prototype.slice.call(slides);
+  timings = Array.prototype.slice.call(timings);
+
+  const viewportHeight = window.innerHeight;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = timings.indexOf(entry.target);
+          slides.forEach((slide, i) => {
+            if (i === index) {
+              slide.style.zIndex = "10";
+            } else {
+              slide.style.zIndex = "0";
+            }
+          });
+        }
+      });
+    },
+    { threshold: [0, 1] }
+  );
+
+  timings.forEach((timing) => {
+    observer.observe(timing);
+  });
+</script>
