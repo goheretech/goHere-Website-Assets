@@ -18,9 +18,42 @@
         height: 100vh;
         position: absolute;
       }
+      #load-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+        background: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999999999999999999999;
+      }
+      #load-bar {
+        width: 70vw;
+        height: 20px;
+        border: 1px solid white;
+        position: relative;
+        transition: all 200ms;
+      }
+      #load {
+        width: 0%;
+        height: 100%;
+        background: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+      }
     </style>
   </head>
   <body>
+    <div id="load-screen">
+      <div id="load-bar"><div id="load"></div></div>
+    </div>
     <div class="rail">
       <div class="cart">
         <canvas id="main-canvas"></canvas>
@@ -28,6 +61,9 @@
     </div>
   </body>
   <script>
+    // Count the number of assets to load and their total weight
+    let assetCount = 0;
+    let totalWeight = 0;
     const frameCount = 60;
 
     const imageUrls = generateImageUrls("img/chicago/chi", frameCount);
@@ -54,8 +90,17 @@
       for (let i = 0; i < frameCount; i++) {
         images[i] = new Image();
         images[i].src = imageUrls[i];
+        assetCount++;
+        totalWeight += getAssetWeight(images[i]);
       }
     }
+
+    images.forEach((img) => {
+      img.addEventListener("load", function () {
+        loadedWeight += getAssetWeight(img);
+        updateLoadbar();
+      });
+    });
 
     // Create the offscreen canvas
     const offscreenCanvas = document.createElement("canvas");
@@ -106,5 +151,64 @@
 
     // Update the frame on scroll
     window.addEventListener("scroll", updateFrame);
+
+    // Get the loadbar element
+    const loadbar = document.querySelector("#load");
+
+    document
+      .querySelectorAll("img, script, link[rel='stylesheet']")
+      .forEach(function (asset) {
+        assetCount++;
+        totalWeight += getAssetWeight(asset);
+      });
+
+    // Track the progress of each asset as it loads
+    let loadedWeight = 0;
+    document
+      .querySelectorAll("img, script, link[rel='stylesheet']")
+      .forEach(function (asset) {
+        asset.addEventListener("load", function () {
+          loadedWeight += getAssetWeight(asset);
+          updateLoadbar();
+        });
+      });
+
+    function getAssetWeight(asset) {
+      // Calculate the weight of the asset based on its size in bytes
+      let weight = 0;
+      if (asset.tagName == "IMG") {
+        weight = (asset.naturalWidth * asset.naturalHeight * 4) / 1000;
+        weight = parseInt(weight);
+      } else {
+        const url = asset.href || asset.src;
+        const xhr = new XMLHttpRequest();
+        xhr.open("HEAD", url, false);
+        xhr.send();
+        if (xhr.status == 200) {
+          weight = xhr.getResponseHeader("Content-Length") / 1000;
+          weight = parseInt(weight);
+        }
+      }
+      return weight;
+    }
+
+    function updateLoadbar() {
+      // Calculate the overall progress based on the total loaded weight
+      let progress = (loadedWeight / totalWeight) * 100;
+
+      // Update the loadbar width based on the progress
+      loadbar.style.width = progress + "%";
+
+      progress = parseInt(progress);
+
+      if (progress >= 99) {
+        hideLoadScreen();
+      }
+    }
+
+    function hideLoadScreen() {
+      loadScreen = loadbar.parentElement.parentElement;
+      loadScreen.style.display = "none";
+    }
   </script>
 </html>

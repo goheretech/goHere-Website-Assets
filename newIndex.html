@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>goHere v3</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/lettering.js/0.7.0/jquery.lettering.min.js"
+      integrity="sha512-9ex1Kp3S7uKHVZmQ44o5qPV6PnP8/kYp8IpUHLDJ+GZ/qpKAqGgEEH7rhYlM4pTOSs/WyHtPubN2UePKTnTSww=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/textillate/0.4.0/jquery.textillate.min.js"
+      integrity="sha512-0bHMhYsdpiur1bT84kDH4D7cpxFQ9O7uA5yxVAqWC87h552Xt0swX4M+ZlXMKE8oPVRIJ5lAwXWO2UWeDwJJOw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <style>
+      .s {
+        height: 100vh;
+      }
+
+      canvas {
+        top: 0;
+        /* z-index:999999999; */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      body {
+        background: rgb(0, 0, 0);
+        background-attachment: fixed;
+        color: white;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .rail {
+        height: 200vh;
+        position: relative;
+      }
+      .cart {
+        height: 100vh;
+        width: 100%;
+        position: sticky;
+        top: 0px;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      section {
+        height: 100vh;
+        display: flex;
+        display: flex; /* Enable flexbox layout */
+        justify-content: center; /* Center elements horizontally */
+        align-items: center; /* Center elements vertically */
+      }
+      .card {
+        border-radius: 30px;
+        display: flex; /* Enable flexbox layout */
+        justify-content: center; /* Center elements horizontally */
+        align-items: center; /* Center elements vertically */
+        text-align: center;
+        padding-top: 80px;
+        padding-bottom: 80px;
+        padding-left: 120px;
+        padding-right: 120px;
+        flex-direction: column;
+        max-width: 900px;
+      }
+      h1 {
+        font-size: 36px;
+        padding-bottom: 10px;
+        color: black;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.js",
+          "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/OBJLoader.js",
+          "RGBELoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/RGBELoader.js",
+          "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/OrbitControls.js",
+          "Reflector": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/objects/Reflector.js",
+          "PointerControls": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/PointerControls.js",
+          "GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/GLTFLoader.js",
+          "EXRLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/EXRLoader.js",
+          "RenderPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/RenderPass.js",
+          "UnrealBloomPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/UnrealBloomPass.js",
+          "BokehPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/BokehPass.js",
+          "EffectComposer": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/EffectComposer.js",
+          "dat.gui": "https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <!-- <div class="loadScreen"><div class="loadBar"><div id="loadbar_internal"></div></div></div> -->
+    <!-- <div class="rail">
+        <section class="cart">
+          <div class="card">
+            <h1>
+              The Digital Revolution
+              <span style="font-weight:bold;">Is Here.</span>
+            </h1>
+          </div>
+        </section>
+      </div>
+    </div> -->
+  </body>
+  <script type="module" src="/js/ReflectorMaterial.js"></script>
+  <script type="module" src="/js/logo-new.js"></script>
+</html>
