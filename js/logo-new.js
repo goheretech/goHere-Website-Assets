@@ -233,7 +233,7 @@ function FinalRender() {
 function Render() {
   renderer.render(scene, camera);
   const deltaTime = clock.getDelta();
-  logoMesh.rotation.y += 0.001 * deltaTime;
+  logoMesh.rotation.y += 0.1 * deltaTime;
   // controls.update();
   requestAnimationFrame(Render);
 }
