@@ -6,12 +6,14 @@ import { RGBELoader } from "RGBELoader";
 
 let envMap,
   logo,
+  logoMesh,
   scene = new THREE.Scene(),
   renderer,
   floor,
   camera,
   controls,
-  canvas;
+  canvas,
+  screenHeight;
 
 let screenRatio;
 
@@ -65,9 +67,48 @@ let start = {
     position: new THREE.Vector3(0, 0, 30),
     rotation: new THREE.Vector3(0, 0, 0),
   },
-
   ambient: { intensity: 1.0 },
 };
+
+let P = [
+  {
+    id: "s1",
+    topPixel: "",
+    bottomPixel: "",
+    start: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, -10, 0),
+        rotation: new THREE.Vector3(0, 0, -90),
+      },
+    },
+    mid: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 0, 30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+    },
+    end: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 20, 50),
+        rotation: new THREE.Vector3(0, 0, 90),
+      },
+    },
+    startFullyVisible: true,
+    endFullyGone: true,
+  },
+];
 
 Start();
 
@@ -110,7 +151,7 @@ function SetupCamera(master) {
   camera.position.set(
     start.camera.position.x,
     start.camera.position.y,
-    start.camera.position.z * screenRatio
+    start.camera.position.z
   );
   camera.rotation.set(
     start.camera.rotation.x,
@@ -118,8 +159,8 @@ function SetupCamera(master) {
     start.camera.rotation.z
   );
   scene.add(camera);
-  controls = new OrbitControls(camera, renderer.domElement);
-  console.log(controls);
+  // controls = new OrbitControls(camera, renderer.domElement);
+  // console.log(controls);
 }
 
 function SetupScene() {
@@ -132,15 +173,17 @@ function SetupLogo() {
     "https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fnewv%2F"
   );
   loader.load("betterLogo.glb?alt=media", function (gltf) {
-    logo = gltf.scene.children[0];
+    logoMesh = gltf.scene.children[0];
 
-    for (let p = 0; p < logo.children.length; p++) {
-      let pod = logo.children[p];
+    for (let p = 0; p < logoMesh.children.length; p++) {
+      let pod = logoMesh.children[p];
       pod.material = logoMaterials[p];
       pod.material.envMapIntensity = 1.5;
     }
+    logo = new THREE.Mesh();
+    logo.add(logoMesh);
     scene.add(logo);
-    logo.position.y = -10;
+    logo.position.copy(P[0].start.logo.position);
     FinalRender();
   });
 }
@@ -181,14 +224,14 @@ function SetupFloor() {
 
 function FinalRender() {
   renderer.render(scene, camera);
-  //   getPixels();
+  getPixels();
   requestAnimationFrame(Render);
 }
 
 function Render() {
   renderer.render(scene, camera);
-  logo.rotation.y += 0.001;
-  controls.update();
+  logoMesh.rotation.y += 0.001;
+  // controls.update();
   requestAnimationFrame(Render);
 }
 
@@ -212,6 +255,17 @@ function onScroll() {
   //0 to 100
 
   const scrollPos = window.pageYOffset;
+  let scrollPerc = GetPercentage(scrollPos);
+
+  let _new = CurrentTransform(scrollPerc);
+
+  if (_new == undefined) return;
+
+  logo.position.copy(_new._logo.pos);
+  logo.rotation.copy(Euler(_new._logo.rot));
+
+  camera.position.copy(_new._camera.pos);
+  camera.rotation.copy(Euler(_new._camera.rot));
 }
 
 function CurrentTransform(p) {
@@ -219,77 +273,139 @@ function CurrentTransform(p) {
     return;
   }
   let _p = p.percent / 100;
-  let master = sections[p.index];
-  let pos = new THREE.Vector3(
-    lerp(
-      _p,
-      master.transforms.start.position.x,
-      master.transforms.end.position.x
-    ),
-    lerp(
-      _p,
-      master.transforms.start.position.y,
-      master.transforms.end.position.y
-    ),
-    lerp(
-      _p,
-      master.transforms.start.position.z,
-      master.transforms.end.position.z
-    )
-  );
-  let rot = new THREE.Vector3(
-    lerp(
-      _p,
-      master.transforms.start.rotation.x,
-      master.transforms.end.rotation.x
-    ),
-    lerp(
-      _p,
-      master.transforms.start.rotation.y,
-      master.transforms.end.rotation.y
-    ),
-    lerp(
-      _p,
-      master.transforms.start.rotation.z,
-      master.transforms.end.rotation.z
-    )
-  );
+  let master = P[p.index];
 
-  return { p: pos, r: rot };
+  console.log(_p);
+
+  let _camera = {
+    pos: new THREE.Vector3(
+      lerp(
+        _p,
+        master.start.camera.position.x,
+        master.mid.camera.position.x,
+        master.end.camera.position.x
+      ),
+      lerp(
+        _p,
+        master.start.camera.position.y,
+        master.mid.camera.position.y,
+        master.end.camera.position.y
+      ),
+      lerp(
+        _p,
+        master.start.camera.position.z,
+        master.mid.camera.position.z,
+        master.end.camera.position.z
+      )
+    ),
+    rot: new THREE.Vector3(
+      lerp(
+        _p,
+        master.start.camera.rotation.x,
+        master.mid.camera.rotation.x,
+        master.end.camera.rotation.x
+      ),
+      lerp(
+        _p,
+        master.start.camera.rotation.y,
+        master.mid.camera.rotation.y,
+        master.end.camera.rotation.y
+      ),
+      lerp(
+        _p,
+        master.start.camera.rotation.z,
+        master.mid.camera.rotation.z,
+        master.end.camera.rotation.z
+      )
+    ),
+  };
+
+  let _logo = {
+    pos: new THREE.Vector3(
+      lerp(
+        _p,
+        master.start.logo.position.x,
+        master.mid.logo.position.x,
+        master.end.logo.position.x
+      ),
+      lerp(
+        _p,
+        master.start.logo.position.y,
+        master.start.logo.position.y,
+        master.end.logo.position.y
+      ),
+      lerp(
+        _p,
+        master.start.logo.position.z,
+        master.mid.logo.position.z,
+        master.end.logo.position.z
+      )
+    ),
+    rot: new THREE.Vector3(
+      lerp(
+        _p,
+        master.start.logo.rotation.x,
+        master.mid.logo.rotation.x,
+        master.end.logo.rotation.x
+      ),
+      lerp(
+        _p,
+        master.start.logo.rotation.y,
+        master.mid.logo.rotation.y,
+        master.end.logo.rotation.y
+      ),
+      lerp(
+        _p,
+        master.start.logo.rotation.z,
+        master.mid.logo.rotation.z,
+        master.end.logo.rotation.z
+      )
+    ),
+  };
+
+  return { _camera, _logo };
 }
 
-function lerp(t, start, end) {
-  let l = (1 - t) * start + t * end;
+function lerp(t, a, b, c) {
+  let l = (1 - t) * ((1 - t) * a + t * b) + t * ((1 - t) * b + t * c);
   return l;
 }
 
 function GetPercentage(scrollPos) {
-  for (let i = 0; i < sections.length; i++) {
-    const master = sections[i];
+  for (let i = 0; i < P.length; i++) {
+    const section = P[i];
     let per = 0;
-    if (scrollPos > master.topPixel && scrollPos < master.bottomPixel + 1500) {
-      per = mapRange(scrollPos, master.topPixel, master.bottomPixel, 0, 100);
+    if (scrollPos > section.topPixel && scrollPos < section.bottomPixel) {
+      per = mapRange(scrollPos, section.topPixel, section.bottomPixel, 0, 100);
       return { percent: per, index: i };
     }
   }
 }
 
 function getPixels() {
-  for (let i = 0; i < sections.length; i++) {
-    const master = sections[i];
-    const range = divRange(master.parent);
-    master.topPixel = range.top;
-    master.bottomPixel = range.bottom;
+  for (let i = 0; i < P.length; i++) {
+    const section = P[i];
+    const range = divRange(section.id);
+    section.topPixel = range.top;
+    section.bottomPixel = range.bottom;
+
+    if (!section.startFullyVisible) {
+      section.topPixel = range.top - screenHeight;
+    }
+    if (!section.endFullyGone) {
+      section.bottomPixel = range.bottom - screenHeight;
+    }
   }
 }
 
 function divRange(id) {
   var div = document.getElementById(id);
   var rect = div.getBoundingClientRect();
-  var top = div.offsetTop - div.offsetHeight;
+  var top = div.offsetTop;
   var bottom = div.offsetTop + div.offsetHeight;
+  screenHeight = screen.height;
 
-  return { top: top, bottom: bottom };
+  return { top: top, bottom: bottom, height: div.offsetHeight };
 }
 
 function mapRange(num, inputMin, inputMax, outputMin, outputMax) {
@@ -297,4 +413,17 @@ function mapRange(num, inputMin, inputMax, outputMin, outputMax) {
     ((num - inputMin) * (outputMax - outputMin)) / (inputMax - inputMin) +
     outputMin
   );
+}
+
+function Euler(rotationVector) {
+  // Convert the rotation angles from degrees to radians
+  const x = THREE.MathUtils.degToRad(rotationVector.x);
+  const y = THREE.MathUtils.degToRad(rotationVector.y);
+  const z = THREE.MathUtils.degToRad(rotationVector.z);
+
+  // Create an Euler instance with the converted angles
+  const euler = new THREE.Euler(x, y, z);
+
+  // Set the rotation of the Mesh object to the Euler instance
+  return euler;
 }
