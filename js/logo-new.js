@@ -83,7 +83,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -10, 0),
+        position: new THREE.Vector3(0, -10, -10),
         rotation: new THREE.Vector3(0, 0, -90),
       },
     },
@@ -93,7 +93,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 0, 30),
+        position: new THREE.Vector3(0, 0, 0),
         rotation: new THREE.Vector3(0, 0, 0),
       },
     },
@@ -103,11 +103,48 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 20, 50),
+        position: new THREE.Vector3(0, 35, 20),
         rotation: new THREE.Vector3(0, 0, 90),
       },
     },
     startFullyVisible: true,
+    endFullyGone: true,
+  },
+  {
+    id: "s2",
+    topPixel: "",
+    bottomPixel: "",
+    start: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, -20, 0),
+        rotation: new THREE.Vector3(0, 0, -90),
+      },
+    },
+    mid: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 0),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 0, 0),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+    },
+    end: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 20, 0),
+        rotation: new THREE.Vector3(0, 0, 90),
+      },
+    },
+    startFullyVisible: false,
     endFullyGone: true,
   },
 ];
@@ -227,6 +264,7 @@ function SetupFloor() {
 function FinalRender() {
   renderer.render(scene, camera);
   getPixels();
+  onScroll();
   requestAnimationFrame(Render);
 }
 
