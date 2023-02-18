@@ -400,7 +400,7 @@ function getPixels() {
 
 function divRange(id) {
   var div = document.getElementById(id);
-  var rect = div.getBoundingClientRect();
+  // var rect = div.getBoundingClientRect();
   var top = div.offsetTop;
   var bottom = div.offsetTop + div.offsetHeight;
   screenHeight = screen.height;
