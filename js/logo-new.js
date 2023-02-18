@@ -15,6 +15,8 @@ let envMap,
   canvas,
   screenHeight;
 
+const clock = new THREE.Clock();
+
 let screenRatio;
 
 const Color = {
@@ -230,7 +232,8 @@ function FinalRender() {
 
 function Render() {
   renderer.render(scene, camera);
-  logoMesh.rotation.y += 0.001;
+  const deltaTime = clock.getDelta();
+  logoMesh.rotation.y += 0.001 * deltaTime;
   // controls.update();
   requestAnimationFrame(Render);
 }
