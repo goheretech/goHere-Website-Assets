@@ -120,13 +120,13 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -20, 0),
+        position: new THREE.Vector3(0, 20, 0),
         rotation: new THREE.Vector3(0, 0, -90),
       },
     },
     mid: {
       camera: {
-        position: new THREE.Vector3(0, 0, 0),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
@@ -140,8 +140,84 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 20, 0),
+        position: new THREE.Vector3(0, -20, 0),
         rotation: new THREE.Vector3(0, 0, 90),
+      },
+    },
+    startFullyVisible: false,
+    endFullyGone: true,
+  },
+
+  {
+    id: "s3",
+    topPixel: "",
+    bottomPixel: "",
+    start: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 60),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 40, -30),
+        rotation: new THREE.Vector3(180, 90, -90),
+      },
+    },
+    mid: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 60),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 0, -30),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+    },
+    end: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 60),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, -40, -30),
+        rotation: new THREE.Vector3(-360, -90, 90),
+      },
+    },
+    startFullyVisible: false,
+    endFullyGone: true,
+  },
+
+  {
+    id: "s4",
+    topPixel: "",
+    bottomPixel: "",
+    start: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 60),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(-5, 40, -30),
+        rotation: new THREE.Vector3(-45, 45, -180),
+      },
+    },
+    mid: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 60),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(-5, 0, -10),
+        rotation: new THREE.Vector3(-45, 45, 0),
+      },
+    },
+    end: {
+      camera: {
+        position: new THREE.Vector3(0, 0, 60),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(-5, -20, 90),
+        rotation: new THREE.Vector3(-45, 45, 180),
       },
     },
     startFullyVisible: false,
