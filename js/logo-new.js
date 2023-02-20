@@ -236,7 +236,6 @@ function Start() {
 
 function SetupRenderer() {
   canvas = document.getElementById("canvas");
-  // console.log(canvas);
   renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true,
@@ -261,19 +260,11 @@ function SetupCamera(master) {
     0.1,
     3000
   );
-  camera.position.set(
-    start.camera.position.x,
-    start.camera.position.y,
-    start.camera.position.z
-  );
-  camera.rotation.set(
-    start.camera.rotation.x,
-    start.camera.rotation.y,
-    start.camera.rotation.z
-  );
+  camera.position.copy(P[0].start.camera.position);
+  camera.rotation.copy(Euler(P[0].start.camera.rotation));
+
   scene.add(camera);
   // controls = new OrbitControls(camera, renderer.domElement);
-  // console.log(controls);
 }
 
 function SetupScene() {
@@ -297,6 +288,7 @@ function SetupLogo() {
     logo.add(logoMesh);
     scene.add(logo);
     logo.position.copy(P[0].start.logo.position);
+    logo.rotation.copy(Euler(P[0].start.logo.rotation));
     FinalRender();
   });
 }
@@ -329,7 +321,6 @@ function SetupFloor() {
   floor = new THREE.Mesh(geo, mat);
   floor.rotation.x = -Math.PI / 2;
   floor.position.y = -15;
-  console.log(floor.material);
   scene.add(floor);
 
   cubeCamera.update(renderer, scene);
@@ -346,6 +337,7 @@ function Render() {
   renderer.render(scene, camera);
   const deltaTime = clock.getDelta();
   logoMesh.rotation.y += 0.1 * deltaTime;
+
   // controls.update();
   requestAnimationFrame(Render);
 }
@@ -353,7 +345,6 @@ function Render() {
 function onWindowResize() {
   screenRatio = window.innerHeight / window.innerWidth;
   screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
-  // console.log(screenRatio);
   camera.aspect = window.innerWidth / window.outerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.outerHeight);
@@ -374,7 +365,12 @@ function onScroll() {
 
   let _new = CurrentTransform(scrollPerc);
 
-  if (_new == undefined) return;
+  if (_new == undefined) {
+    // logo.position.copy(new THREE.Vector3(-100, -100, 0));
+    return;
+  }
+
+  logo.rotation.copy(Euler(_new._logo.rot));
 
   logo.position.copy(_new._logo.pos);
   logo.rotation.copy(Euler(_new._logo.rot));
@@ -389,8 +385,6 @@ function CurrentTransform(p) {
   }
   let _p = p.percent / 100;
   let master = P[p.index];
-
-  console.log(_p);
 
   let _camera = {
     pos: new THREE.Vector3(
