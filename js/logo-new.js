@@ -66,7 +66,7 @@ function LogoMaterial(clr) {
 
 let start = {
   camera: {
-    position: new THREE.Vector3(0, 0, 30),
+    position: new THREE.Vector3(0, 0, 40),
     rotation: new THREE.Vector3(0, 0, 0),
   },
   ambient: { intensity: 1.0 },
