@@ -157,7 +157,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(10, 10, -10),
+        position: new THREE.Vector3(10, 20, -10),
         rotation: new THREE.Vector3(-45, 0, -90),
       },
     },
