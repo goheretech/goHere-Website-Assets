@@ -190,17 +190,17 @@ let P = [
     bottomPixel: "",
     start: {
       camera: {
-        position: new THREE.Vector3(0, 0, 50),
+        position: new THREE.Vector3(0, 0, 110),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 30, 0),
+        position: new THREE.Vector3(0, 50, 0),
         rotation: new THREE.Vector3(0, -260, -90),
       },
     },
     mid: {
       camera: {
-        position: new THREE.Vector3(0, 0, 50),
+        position: new THREE.Vector3(0, 0, 110),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
@@ -210,11 +210,11 @@ let P = [
     },
     end: {
       camera: {
-        position: new THREE.Vector3(0, 0, 50),
+        position: new THREE.Vector3(0, 0, 110),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -50, 0),
+        position: new THREE.Vector3(0, -90, 0),
         rotation: new THREE.Vector3(0, 260, 90),
       },
     },
