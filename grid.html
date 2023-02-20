@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background: black;
+      }
+      .grid-container {
+        margin-top: 100vh;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 10px;
+      }
+
+      .grid-item {
+        width: 300px;
+        height: 300px;
+        background-color: lightblue;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+      }
+      .bg-element {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100px;
+        height: 100px;
+        background-color: lightgreen;
+        text-align: center;
+        line-height: 100px;
+        color: white;
+        font-size: 24px;
+        z-index: 1;
+      }
+      .over {
+        position: relative;
+        padding: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 1 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 2 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 3 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 4 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 5 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 6 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 7 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 8 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+      <div class="grid-item">
+        <div class="bg-element"></div>
+        <div class="over">
+          Item 9 <span>X: <span class="x-p">1</span></span>
+          <span>Y: <span class="y-p">1</span></span>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // Get the array of elements
+    const elements = document.querySelectorAll(".boxes_background");
+
+    // Add a mousemove event listener to the document
+    document.addEventListener("mousemove", (event) => {
+      // Get the position of the mouse cursor
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
+
+      // Loop through the array of elements and update their position
+      elements.forEach((element, i) => {
+        const parent = element.parentElement;
+        const parentX = parent.getBoundingClientRect().left;
+        const parentY = parent.getBoundingClientRect().top;
+
+        let positionX = mouseX - parentX;
+        let positionY = mouseY - parentY;
+
+        element.style.left = positionX + "px";
+        element.style.top = positionY + "px";
+      });
+    });
+  </script>
+</html>
