@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .scroll-box {
+        animation: marquee 12s linear infinite;
+        display: inline-block;
+      }
+      .scroll-c {
+        display: flex;
+        white-space: nowrap;
+      }
+
+      @keyframes marquee {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(-50%, 0);
+          /* changed from 100% */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sec">
+      <div class="drop-scroll-text">
+        <div class="scroll-box">
+          <div class="scroll-c">
+            <div class="scroll-topic">CUTTING EDGE</div>
+            <div class="scroll-topic">EXTENDED REALITY</div>
+            <div class="scroll-topic">CREATIVE SOLUTIONS</div>
+            <div class="scroll-topic">TECHNOLOGY</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const topics = Array.from(document.getElementsByClassName("scroll-topic"));
+
+    topics.forEach((topic) => {
+      const clone = topic.cloneNode(true);
+      topics[0].parentElement.appendChild(clone);
+    });
+  </script>
+</html>
