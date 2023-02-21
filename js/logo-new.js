@@ -157,7 +157,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(10, 15, -10),
+        position: new THREE.Vector3(10, 20, -10),
         rotation: new THREE.Vector3(-45, 0, -90),
       },
     },
@@ -349,7 +349,6 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.outerHeight);
   camera.position.z = start.camera.position.z * screenRatio;
-  //   getPixels();
 }
 function onScroll() {
   //Get percent scrolled
