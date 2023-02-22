@@ -93,7 +93,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 0, 0),
+        position: new THREE.Vector3(0, 12, 5),
         rotation: new THREE.Vector3(0, 0, 0),
       },
     },
@@ -167,7 +167,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(10, -5, 0),
+        position: new THREE.Vector3(5, 5, 10),
         rotation: new THREE.Vector3(-45, 0, 0),
       },
     },
@@ -177,7 +177,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -20, 30),
+        position: new THREE.Vector3(0, -10, 30),
         rotation: new THREE.Vector3(-45, 0, 90),
       },
     },
@@ -194,7 +194,7 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 50, 0),
+        position: new THREE.Vector3(0, 80, -80),
         rotation: new THREE.Vector3(0, -260, -90),
       },
     },
@@ -204,8 +204,8 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 0, 0),
-        rotation: new THREE.Vector3(0, 0, 0),
+        position: new THREE.Vector3(0, -5, 40),
+        rotation: new THREE.Vector3(0, -20, 0),
       },
     },
     end: {
@@ -214,8 +214,8 @@ let P = [
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -150, 0),
-        rotation: new THREE.Vector3(0, 260, 90),
+        position: new THREE.Vector3(0, 0, 120),
+        rotation: new THREE.Vector3(0, 0, 120),
       },
     },
     startFullyVisible: false,
@@ -439,7 +439,7 @@ function CurrentTransform(p) {
       lerp(
         _p,
         master.start.logo.position.y,
-        master.start.logo.position.y,
+        master.mid.logo.position.y,
         master.end.logo.position.y
       ),
       lerp(
@@ -475,8 +475,21 @@ function CurrentTransform(p) {
 }
 
 function lerp(t, a, b, c) {
-  let l = (1 - t) * ((1 - t) * a + t * b) + t * ((1 - t) * b + t * c);
-  return l;
+  let v;
+  if (t <= 0) {
+    return a;
+  }
+  if (t >= 1) {
+    return c;
+  }
+  if (t < 0.5) {
+    const t1 = t * 2;
+    v = a * (1 - t1) + b * t1;
+  } else {
+    const t2 = (t - 0.5) * 2;
+    v = b * (1 - t2) + c * t2;
+  }
+  return v;
 }
 
 function GetPercentage(scrollPos) {
