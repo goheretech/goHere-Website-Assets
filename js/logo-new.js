@@ -293,43 +293,17 @@ function SetupLogo() {
   });
 }
 
-function SetupFloor() {
-  // Create cube render target
-  const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(128, {
-    generateMipmaps: true,
-    minFilter: THREE.LinearMipmapLinearFilter,
-  });
-
-  // Create cube camera
-  const cubeCamera = new THREE.CubeCamera(1, 100000, cubeRenderTarget);
-  cubeCamera.position.y = -15;
-  scene.add(cubeCamera);
-
-  const geo = new THREE.PlaneGeometry(100, 100);
-  // const mat = new MeshReflectorMaterial(renderer, camera, scene, logo);
-  const mat = new THREE.MeshPhysicalMaterial({
-    color: 0x000000,
-    transmission: 0,
-    opacity: 1,
-    metalness: 1,
-    roughness: 0.0,
-    specularIntensity: 1,
-    specularColor: 0xffffff,
-    envMapIntensity: 1,
-    envMap: cubeRenderTarget.texture,
-  });
-  floor = new THREE.Mesh(geo, mat);
-  floor.rotation.x = -Math.PI / 2;
-  floor.position.y = -15;
-  scene.add(floor);
-
-  cubeCamera.update(renderer, scene);
+function SetScreenRatio() {
+  screenRatio = window.innerHeight / window.innerWidth;
+  //Screen Ratio > 1 = Mobile
+  console.log(`Screen Ratio: ${screenRatio}`);
 }
 
 function FinalRender() {
   renderer.render(scene, camera);
   getPixels();
   onScroll();
+  SetScreenRatio();
   requestAnimationFrame(Render);
 }
 
@@ -343,8 +317,8 @@ function Render() {
 }
 
 function onWindowResize() {
-  screenRatio = window.innerHeight / window.innerWidth;
-  screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
+  SetScreenRatio();
+
   camera.aspect = window.innerWidth / window.outerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.outerHeight);
@@ -407,7 +381,7 @@ function CurrentTransform(p) {
         master.mid.camera.position.z,
         master.end.camera.position.z,
         linear
-      )
+      ) * screenRatio
     ),
     rot: new THREE.Vector3(
       lerp(
