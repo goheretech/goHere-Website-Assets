@@ -392,21 +392,21 @@ function CurrentTransform(p) {
         master.start.camera.position.x,
         master.mid.camera.position.x,
         master.end.camera.position.x,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.camera.position.y,
         master.mid.camera.position.y,
         master.end.camera.position.y,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.camera.position.z,
         master.mid.camera.position.z,
         master.end.camera.position.z,
-        easeIn
+        linear
       )
     ),
     rot: new THREE.Vector3(
@@ -415,21 +415,21 @@ function CurrentTransform(p) {
         master.start.camera.rotation.x,
         master.mid.camera.rotation.x,
         master.end.camera.rotation.x,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.camera.rotation.y,
         master.mid.camera.rotation.y,
         master.end.camera.rotation.y,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.camera.rotation.z,
         master.mid.camera.rotation.z,
         master.end.camera.rotation.z,
-        easeIn
+        linear
       )
     ),
   };
@@ -441,21 +441,21 @@ function CurrentTransform(p) {
         master.start.logo.position.x,
         master.mid.logo.position.x,
         master.end.logo.position.x,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.logo.position.y,
         master.mid.logo.position.y,
         master.end.logo.position.y,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.logo.position.z,
         master.mid.logo.position.z,
         master.end.logo.position.z,
-        easeIn
+        linear
       )
     ),
     rot: new THREE.Vector3(
@@ -464,21 +464,21 @@ function CurrentTransform(p) {
         master.start.logo.rotation.x,
         master.mid.logo.rotation.x,
         master.end.logo.rotation.x,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.logo.rotation.y,
         master.mid.logo.rotation.y,
         master.end.logo.rotation.y,
-        easeIn
+        linear
       ),
       lerp(
         _p,
         master.start.logo.rotation.z,
         master.mid.logo.rotation.z,
         master.end.logo.rotation.z,
-        easeIn
+        linear
       )
     ),
   };
