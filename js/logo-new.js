@@ -241,8 +241,7 @@ function SetupRenderer() {
     antialias: true,
     alpha: true,
   });
-  screenRatio = window.innerHeight / window.innerWidth;
-  screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
+  SetScreenRatio();
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
@@ -261,6 +260,7 @@ function SetupCamera(master) {
     3000
   );
   camera.position.copy(P[0].start.camera.position);
+  camera.position.z = camera.position.z * screenRatio;
   camera.rotation.copy(Euler(P[0].start.camera.rotation));
 
   scene.add(camera);
@@ -288,6 +288,7 @@ function SetupLogo() {
     logo.add(logoMesh);
     scene.add(logo);
     logo.position.copy(P[0].start.logo.position);
+    logo.position.y = logo.position.z * screenRatio;
     logo.rotation.copy(Euler(P[0].start.logo.rotation));
     FinalRender();
   });
@@ -296,6 +297,8 @@ function SetupLogo() {
 function SetScreenRatio() {
   screenRatio = window.innerHeight / window.innerWidth;
   //Screen Ratio > 1 = Mobile
+  screenRatio = screenRatio < 1 ? 1 : 1.5;
+  // screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
   console.log(`Screen Ratio: ${screenRatio}`);
 }
 
@@ -303,7 +306,7 @@ function FinalRender() {
   renderer.render(scene, camera);
   getPixels();
   onScroll();
-  SetScreenRatio();
+
   requestAnimationFrame(Render);
 }
 
@@ -423,7 +426,7 @@ function CurrentTransform(p) {
         master.mid.logo.position.y,
         master.end.logo.position.y,
         linear
-      ),
+      ) * screenRatio,
       lerp(
         _p,
         master.start.logo.position.z,
