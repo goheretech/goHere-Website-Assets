@@ -116,35 +116,35 @@ let P = [
     bottomPixel: "",
     start: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -10, -10),
+        position: new THREE.Vector3(0, 20, 0),
         rotation: new THREE.Vector3(0, 0, -90),
       },
     },
     mid: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 12, 5),
+        position: new THREE.Vector3(0, 0, 0),
         rotation: new THREE.Vector3(0, 0, 0),
       },
     },
     end: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 35, 20),
+        position: new THREE.Vector3(0, -20, 0),
         rotation: new THREE.Vector3(0, 0, 90),
       },
     },
-    startFullyVisible: true,
+    startFullyVisible: false,
     endFullyGone: true,
   },
   {
@@ -153,35 +153,35 @@ let P = [
     bottomPixel: "",
     start: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -10, -10),
-        rotation: new THREE.Vector3(0, 0, -90),
+        position: new THREE.Vector3(10, 20, -10),
+        rotation: new THREE.Vector3(-45, 0, -90),
       },
     },
     mid: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 12, 5),
-        rotation: new THREE.Vector3(0, 0, 0),
+        position: new THREE.Vector3(5, 5, 10),
+        rotation: new THREE.Vector3(-45, 0, 0),
       },
     },
     end: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 30),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 35, 20),
-        rotation: new THREE.Vector3(0, 0, 90),
+        position: new THREE.Vector3(0, -10, 30),
+        rotation: new THREE.Vector3(-45, 0, 90),
       },
     },
-    startFullyVisible: true,
+    startFullyVisible: false,
     endFullyGone: true,
   },
   {
@@ -190,32 +190,32 @@ let P = [
     bottomPixel: "",
     start: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 110),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, -10, -10),
-        rotation: new THREE.Vector3(0, 0, -90),
+        position: new THREE.Vector3(0, 80, -80),
+        rotation: new THREE.Vector3(0, -260, -90),
       },
     },
     mid: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 110),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 12, 5),
-        rotation: new THREE.Vector3(0, 0, 0),
+        position: new THREE.Vector3(0, 0, -10),
+        rotation: new THREE.Vector3(0, -20, 0),
       },
     },
     end: {
       camera: {
-        position: new THREE.Vector3(0, 0, 40),
+        position: new THREE.Vector3(0, 0, 110),
         rotation: new THREE.Vector3(0, 0, 0),
       },
       logo: {
-        position: new THREE.Vector3(0, 35, 20),
-        rotation: new THREE.Vector3(0, 0, 90),
+        position: new THREE.Vector3(0, 0, 120),
+        rotation: new THREE.Vector3(0, 0, 120),
       },
     },
     startFullyVisible: false,
@@ -329,25 +329,24 @@ function onWindowResize() {
   camera.position.z = start.camera.position.z * screenRatio;
 }
 function onScroll() {
-  //Get percent scrolled
-  var h = document.documentElement,
-    b = document.body,
-    st = "scrollTop",
-    sh = "scrollHeight";
-  var y = ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
-  //0 to 100
+  // //Get percent scrolled
+  // var h = document.documentElement,
+  //   b = document.body,
+  //   st = "scrollTop",
+  //   sh = "scrollHeight";
+  // var y = ((h[st] || b[st]) / ((h[sh] || b[sh]) - h.clientHeight)) * 100;
+  // //0 to 100
 
   const scrollPos = window.pageYOffset;
   let scrollPerc = GetPercentage(scrollPos);
 
-  let _new = CurrentTransform(scrollPerc);
-
-  if (_new == undefined) {
+  if (scrollPerc == undefined) {
     // logo.position.copy(new THREE.Vector3(-100, -100, 0));
     return;
   }
 
-  logo.rotation.copy(Euler(_new._logo.rot));
+  let _new = CurrentTransform(scrollPerc);
+  // logo.rotation.copy(Euler(_new._logo.rot));
 
   logo.position.copy(_new._logo.pos);
   logo.rotation.copy(Euler(_new._logo.rot));
@@ -498,6 +497,7 @@ function easeOutSine(t) {
 function GetPercentage(scrollPos) {
   for (let i = 0; i < P.length; i++) {
     const section = P[i];
+    if (scrollPos > section.bottomPixel) continue;
     let per = 0;
     if (scrollPos > section.topPixel && scrollPos < section.bottomPixel) {
       per = mapRange(scrollPos, section.topPixel, section.bottomPixel, 0, 100);
