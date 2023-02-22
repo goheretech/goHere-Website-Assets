@@ -186,7 +186,6 @@ function SetupRenderer() {
   });
   screenRatio = window.innerHeight / window.innerWidth;
   screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
-  renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
