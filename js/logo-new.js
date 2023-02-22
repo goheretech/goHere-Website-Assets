@@ -391,19 +391,22 @@ function CurrentTransform(p) {
         _p,
         master.start.camera.position.x,
         master.mid.camera.position.x,
-        master.end.camera.position.x
+        master.end.camera.position.x,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.camera.position.y,
         master.mid.camera.position.y,
-        master.end.camera.position.y
+        master.end.camera.position.y,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.camera.position.z,
         master.mid.camera.position.z,
-        master.end.camera.position.z
+        master.end.camera.position.z,
+        easeOutSine
       )
     ),
     rot: new THREE.Vector3(
@@ -411,19 +414,22 @@ function CurrentTransform(p) {
         _p,
         master.start.camera.rotation.x,
         master.mid.camera.rotation.x,
-        master.end.camera.rotation.x
+        master.end.camera.rotation.x,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.camera.rotation.y,
         master.mid.camera.rotation.y,
-        master.end.camera.rotation.y
+        master.end.camera.rotation.y,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.camera.rotation.z,
         master.mid.camera.rotation.z,
-        master.end.camera.rotation.z
+        master.end.camera.rotation.z,
+        easeOutSine
       )
     ),
   };
@@ -434,19 +440,22 @@ function CurrentTransform(p) {
         _p,
         master.start.logo.position.x,
         master.mid.logo.position.x,
-        master.end.logo.position.x
+        master.end.logo.position.x,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.logo.position.y,
         master.mid.logo.position.y,
-        master.end.logo.position.y
+        master.end.logo.position.y,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.logo.position.z,
         master.mid.logo.position.z,
-        master.end.logo.position.z
+        master.end.logo.position.z,
+        easeOutSine
       )
     ),
     rot: new THREE.Vector3(
@@ -454,19 +463,22 @@ function CurrentTransform(p) {
         _p,
         master.start.logo.rotation.x,
         master.mid.logo.rotation.x,
-        master.end.logo.rotation.x
+        master.end.logo.rotation.x,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.logo.rotation.y,
         master.mid.logo.rotation.y,
-        master.end.logo.rotation.y
+        master.end.logo.rotation.y,
+        easeOutSine
       ),
       lerp(
         _p,
         master.start.logo.rotation.z,
         master.mid.logo.rotation.z,
-        master.end.logo.rotation.z
+        master.end.logo.rotation.z,
+        easeOutSine
       )
     ),
   };
@@ -474,7 +486,8 @@ function CurrentTransform(p) {
   return { _camera, _logo };
 }
 
-function lerp(t, a, b, c) {
+function lerp(t, a, b, c, easingFunc) {
+  t = easingFunc(t);
   let v;
   if (t <= 0) {
     return a;
@@ -490,6 +503,18 @@ function lerp(t, a, b, c) {
     v = b * (1 - t2) + c * t2;
   }
   return v;
+}
+
+function easeIn(t) {
+  return t * t;
+}
+
+function linear(t) {
+  return t;
+}
+
+function easeOutSine(t) {
+  return Math.sin((t * Math.PI) / 2);
 }
 
 function GetPercentage(scrollPos) {
