@@ -250,6 +250,7 @@ function SetupRenderer() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor(0xeb4034, 0);
   scene.environment = envMap;
+  //before j
 }
 
 function SetupCamera(master) {
