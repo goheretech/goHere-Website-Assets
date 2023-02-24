@@ -300,7 +300,6 @@ function SetScreenRatio() {
   //Screen Ratio > 1 = Mobile
   screenRatio = screenRatio < 1 ? 1 : 1.5;
   // screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
-  console.log(`Screen Ratio: ${screenRatio}`);
 }
 
 function FinalRender() {
@@ -454,7 +453,7 @@ function CurrentTransform(p) {
         _p,
         master.start.logo.rotation.z,
         master.mid.logo.rotation.z,
-        master.end.logo.rotation.z,
+        master.end.logo.rotation.z * screenRatio,
         linear
       )
     ),
