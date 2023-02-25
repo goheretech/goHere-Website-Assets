@@ -298,7 +298,7 @@ function SetupLogo() {
 function SetScreenRatio() {
   screenRatio = window.innerHeight / window.innerWidth;
   //Screen Ratio > 1 = Mobile
-  screenRatio = screenRatio < 1 ? 1 : 2;
+  screenRatio = screenRatio < 1 ? 1 : 2.5;
   // screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
 }
 
