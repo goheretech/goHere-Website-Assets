@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .hero {
+        background: red;
+        position: relative;
+        height: 300px;
+      }
+      #insight {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <canvas id="insight"></canvas>
+    </div>
+  </body>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.js",
+        "OBJLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/OBJLoader.js",
+        "RGBELoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/RGBELoader.js",
+        "OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/OrbitControls.js",
+        "Reflector": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/objects/Reflector.js",
+        "PointerControls": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/controls/PointerControls.js",
+        "GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/GLTFLoader.js",
+        "EXRLoader": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/loaders/EXRLoader.js",
+        "RenderPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/RenderPass.js",
+        "UnrealBloomPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/UnrealBloomPass.js",
+        "BokehPass": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/BokehPass.js",
+        "EffectComposer": "https://cdn.jsdelivr.net/npm/three@0.148.0/examples/jsm/postprocessing/EffectComposer.js",
+        "dat.gui": "https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.min.js"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.module.js";
+    import * as dat from "https://cdn.jsdelivr.net/npm/dat.gui@0.7.9/build/dat.gui.module.js";
+    import { OrbitControls } from "OrbitControls";
+    import { GLTFLoader } from "GLTFLoader";
+    import { RGBELoader } from "RGBELoader";
+
+    let envMap,
+      logo,
+      logoMesh,
+      scene = new THREE.Scene(),
+      renderer,
+      camera,
+      controls,
+      canvas,
+      screenHeight,
+      container;
+
+    const clock = new THREE.Clock();
+
+    let screenRatio;
+
+    const Color = {
+      Red: { Hex: 0xe7180c, Material: "" },
+      Orange: { Hex: 0xff8008, Material: "" },
+      Yellow: { Hex: 0xeec200, Material: "" },
+      Green: { Hex: 0x027b00, Material: "" },
+      Cyan: { Hex: 0x0ba4ff, Material: "" },
+      Blue: { Hex: 0x002abc, Material: "" },
+      Purple: { Hex: 0x7200bc, Material: "" },
+    };
+
+    const hdrEquirect = new RGBELoader()
+      .setPath(
+        "https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fnewv%2Fcubemap%2F"
+      )
+      .load("royal_esplanade_1k.hdr?alt=media", function () {
+        hdrEquirect.mapping = THREE.EquirectangularReflectionMapping;
+        // envMap = hdrEquirect;
+      });
+
+    let logoMaterials = [
+      LogoMaterial(Color.Orange),
+      LogoMaterial(Color.Yellow),
+      LogoMaterial(Color.Green),
+      LogoMaterial(Color.Cyan),
+      LogoMaterial(Color.Blue),
+      LogoMaterial(Color.Purple),
+      LogoMaterial(Color.Red),
+    ];
+
+    function LogoMaterial(clr) {
+      const mat = new THREE.MeshPhysicalMaterial({
+        color: clr.Hex,
+        transmission: 0,
+        opacity: 1,
+        metalness: 1,
+        roughness: 0.1,
+        specularIntensity: 1,
+        specularColor: 0xffffff,
+        envMapIntensity: 1,
+        envMap: hdrEquirect,
+      });
+      clr.Material = mat;
+      return mat;
+    }
+
+    let start = {
+      camera: {
+        position: new THREE.Vector3(0, 0, 40),
+        rotation: new THREE.Vector3(0, 0, 0),
+      },
+      logo: {
+        position: new THREE.Vector3(0, 0, 0),
+        rotation: new THREE.Vector3(0, 0, -90),
+      },
+    };
+
+    Start();
+
+    function Start() {
+      SetupRenderer();
+      SetupCamera();
+      SetupScene();
+      window.addEventListener("resize", onWindowResize, false);
+      // FinalRender();
+    }
+
+    function SetupRenderer() {
+      canvas = document.getElementById("insight");
+      container = canvas.parentElement;
+      renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true,
+      });
+      SetScreenRatio();
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setSize(container.clientWidth, container.clientHeight);
+
+      renderer.setClearColor(0xeb4034, 0);
+      scene.environment = envMap;
+      //before j
+    }
+
+    function SetupCamera(master) {
+      camera = new THREE.PerspectiveCamera(
+        35,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        3000
+      );
+      camera.position.copy(start.camera.position);
+      camera.position.z = camera.position.z * screenRatio;
+      camera.rotation.copy(start.camera.rotation);
+
+      scene.add(camera);
+      controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableZoom = false;
+      controls.enablePan = false;
+    }
+
+    function SetupScene() {
+      SetupLogo();
+      // SetupFloor();
+    }
+
+    function SetupLogo() {
+      const loader = new GLTFLoader().setPath(
+        "https://firebasestorage.googleapis.com/v0/b/gohere-24b3c.appspot.com/o/gohere%2Fnewv%2F"
+      );
+      loader.load("betterLogo.glb?alt=media", function (gltf) {
+        logoMesh = gltf.scene.children[0];
+
+        for (let p = 0; p < logoMesh.children.length; p++) {
+          let pod = logoMesh.children[p];
+          pod.material = logoMaterials[p];
+          pod.material.envMapIntensity = 1.5;
+        }
+        logo = new THREE.Mesh();
+        logo.add(logoMesh);
+        scene.add(logo);
+        logo.position.copy(start.logo.position);
+        logo.position.y = logo.position.z * screenRatio;
+        logo.rotation.copy(Euler(start.logo.rotation));
+        FinalRender();
+      });
+    }
+
+    function SetScreenRatio() {
+      screenRatio = window.innerHeight / window.innerWidth;
+      //Screen Ratio > 1 = Mobile
+      screenRatio = screenRatio < 1 ? 1 : 1.5;
+      // screenRatio = mapRange(screenRatio, 1.7, 0.4, 1.3, 1);
+    }
+
+    function FinalRender() {
+      renderer.render(scene, camera);
+      requestAnimationFrame(Render);
+    }
+
+    function Render() {
+      renderer.render(scene, camera);
+      const deltaTime = clock.getDelta();
+      logoMesh.rotation.y += 0.1 * deltaTime;
+
+      controls.update();
+      requestAnimationFrame(Render);
+    }
+
+    function onWindowResize() {
+      SetScreenRatio();
+
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      camera.position.z = start.camera.position.z * screenRatio;
+    }
+
+    function Euler(rotationVector) {
+      // Convert the rotation angles from degrees to radians
+      const x = THREE.MathUtils.degToRad(rotationVector.x);
+      const y = THREE.MathUtils.degToRad(rotationVector.y);
+      const z = THREE.MathUtils.degToRad(rotationVector.z);
+
+      // Create an Euler instance with the converted angles
+      const euler = new THREE.Euler(x, y, z);
+
+      // Set the rotation of the Mesh object to the Euler instance
+      return euler;
+    }
+  </script>
+</html>
